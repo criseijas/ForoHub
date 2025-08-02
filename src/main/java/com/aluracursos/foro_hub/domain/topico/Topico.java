@@ -1,6 +1,7 @@
-package com.aluracursos.foro_hub.topico;
+package com.aluracursos.foro_hub.domain.topico;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,5 +37,12 @@ public class Topico {
         this.status = StatusTopico.TOPICO_ACTIVO;
         this.autor = datos.autor();
         this.curso = datos.curso();
+    }
+
+    public void actualizarDatos(@Valid DatosActualizarTopico datos) {
+        if (datos.titulo() != null) this.titulo = datos.titulo();
+        if (datos.mensaje() != null) this.mensaje = datos.mensaje();
+        if (datos.curso() != null) this.curso = datos.curso();
+        if (datos.autor() != null) this.autor = datos.autor();
     }
 }

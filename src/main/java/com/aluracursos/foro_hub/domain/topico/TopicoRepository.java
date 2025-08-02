@@ -1,4 +1,4 @@
-package com.aluracursos.foro_hub.topico;
+package com.aluracursos.foro_hub.domain.topico;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

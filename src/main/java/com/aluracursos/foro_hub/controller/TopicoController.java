@@ -1,9 +1,6 @@
 package com.aluracursos.foro_hub.controller;
 
-import com.aluracursos.foro_hub.topico.DatosCrearTopico;
-import com.aluracursos.foro_hub.topico.DatosRespuestaTopico;
-import com.aluracursos.foro_hub.topico.Topico;
-import com.aluracursos.foro_hub.topico.TopicoRepository;
+import com.aluracursos.foro_hub.domain.topico.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -56,4 +53,19 @@ public class TopicoController {
         var dto = new DatosRespuestaTopico(topico);
         return ResponseEntity.ok(dto);
     }
+
+    //Actualizar tópico (PUT/topicos)
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<DatosRespuestaTopico> actualizar(@PathVariable Long id, @RequestBody DatosActualizarTopico datos) {
+        var topicoOptional = repository.findById(id);
+        if (topicoOptional.isEmpty()) return ResponseEntity.notFound().build();
+
+        var topico = topicoOptional.get();
+        topico.actualizarDatos(datos);
+
+        return ResponseEntity.ok(new DatosRespuestaTopico(topico));
+    }
+
+
 }
