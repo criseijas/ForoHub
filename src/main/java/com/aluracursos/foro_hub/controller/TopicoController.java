@@ -41,7 +41,7 @@ public class TopicoController {
     @GetMapping
     public ResponseEntity<Page<DatosRespuestaTopico>> listar(@PageableDefault(size = 10, sort = {"fechaCreacion"}) Pageable paginacion) {
 
-        var page = repository.findAll(paginacion).map(topico -> new DatosRespuestaTopico(topico));
+        var page = repository.findByActivoTrue(paginacion).map(topico -> new DatosRespuestaTopico(topico));
 
         return ResponseEntity.ok(page);
     }
@@ -66,6 +66,21 @@ public class TopicoController {
 
         return ResponseEntity.ok(new DatosRespuestaTopico(topico));
     }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity eliminar(@PathVariable Long id) {
+        var topicoOptional = repository.findById(id);
+        if (topicoOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var topico = topicoOptional.get();
+        topico.desactivar(); // Eliminación lógica
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }

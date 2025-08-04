@@ -6,5 +6,6 @@ public enum StatusTopico {
     NO_SOLUCIONADO,
     SOLUCIONADO,
     CERRADO,
-    TOPICO_ACTIVO
+    TOPICO_ACTIVO,
+    TOPICO_INACTIVO
 }

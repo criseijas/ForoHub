@@ -22,6 +22,7 @@ public class Topico {
     private Long id;
     private String titulo;
     private String mensaje;
+    private Boolean activo;
     private LocalDateTime fechaCreacion = LocalDateTime.now();
     @Enumerated(EnumType.STRING)
     private StatusTopico status = StatusTopico.NO_RESPONDIDO;;
@@ -33,6 +34,7 @@ public class Topico {
         this.id = null;
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
+        this.activo = true;
         this.fechaCreacion = LocalDateTime.now();
         this.status = StatusTopico.TOPICO_ACTIVO;
         this.autor = datos.autor();
@@ -45,4 +47,9 @@ public class Topico {
         if (datos.curso() != null) this.curso = datos.curso();
         if (datos.autor() != null) this.autor = datos.autor();
     }
+
+    public void desactivar() {
+        this.activo = false;
+    }
+
 }
