@@ -21,7 +21,7 @@ public class TopicoController {
     @Autowired
     private TopicoRepository repository;
 
-    //Crear tópico (POST)
+    //Crear tópico
     @Transactional
     @PostMapping
     public ResponseEntity crear(@RequestBody @Valid DatosCrearTopico datos, UriComponentsBuilder uriComponentsBuilder) {
@@ -37,7 +37,7 @@ public class TopicoController {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    //Listar todos los tópicos (GET /topicos)
+    //Listar todos los tópicos
     @GetMapping
     public ResponseEntity<Page<DatosRespuestaTopico>> listar(@PageableDefault(size = 10, sort = {"fechaCreacion"}) Pageable paginacion) {
 
@@ -46,7 +46,7 @@ public class TopicoController {
         return ResponseEntity.ok(page);
     }
 
-    //Listar un tópico por su id (GET/topicos/{id})
+    //Listar un tópico por su id
     @GetMapping("/{id}")
     public ResponseEntity obtenerPorId(@PathVariable Long id) {
         var topico = repository.getReferenceById(id); // lanza EntityNotFoundException si no existe
@@ -54,7 +54,7 @@ public class TopicoController {
         return ResponseEntity.ok(dto);
     }
 
-    //Actualizar tópico (PUT/topicos)
+    //Actualizar tópico
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DatosRespuestaTopico> actualizar(@PathVariable Long id, @RequestBody DatosActualizarTopico datos) {
@@ -67,6 +67,7 @@ public class TopicoController {
         return ResponseEntity.ok(new DatosRespuestaTopico(topico));
     }
 
+    //Eliminar tópico
     @Transactional
     @DeleteMapping("/{id}")
     public ResponseEntity eliminar(@PathVariable Long id) {
